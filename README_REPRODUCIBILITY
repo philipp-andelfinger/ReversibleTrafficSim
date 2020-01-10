@@ -1,0 +1,54 @@
+"From Effects to Causes: Reversible Simulation and Reverse Exploration of Microscopic Traffic Models"
+
+Artifacts
+---------
+
+This archive includes the code used to generate the results presented in the paper.
+The code is provided under the GPLv2 license.
+
+We make the code permanently available through Zenodo, which declares accessibility throughout the lifetime of CERN: http://about.zenodo.org/policies/
+The DOI of the code is 10.5281/zenodo.2591930.
+
+Reusability
+-----------
+
+The main reversible simulation and reverse exploration code is independent of the car-following and lane-changing model used. By modifying the model specifications in cf.cpp and lc.cpp, the approach can easily be applied to arbitrary parametrizations and other models. Furthermore, since we provide the code that defines the example scenarios used to generate the plots, users can easily change the scenarios to perform their own reachability studies.
+
+Instructions for replicating results
+------------------------------------
+
+--- System requirements ---
+
+The original experiments were carried out on Ubuntu 16.04.5 LTS.
+Other recent Linux distributions are likely to work, but have not been tested.
+
+To avoid swapping, the system should be equipped with >= 16 GiB RAM.
+
+--- Install libfixmath ---
+
+  git clone https://github.com/PetteriAimonen/libfixmath.git
+  cd libfixmath/libfixmath
+  make
+  sudo mkdir /usr/local/include/fixmath
+  sudo cp *.h *.hpp /usr/local/include/fixmath
+  sudo cp *.a /usr/local/lib
+  sudo ldconfig
+
+--- Compile ---
+
+From root of source folder: 'make' (with the -jN flag for N-way parallel compilation)
+
+--- Run experiments ---
+
+Run all experiments (takes multiple hours): './scripts/run_all_eval.sh'
+
+Run specific experiment:
+  - Figure 4: './scripts/epoch_length/run_epoch_length_eval.sh' 
+  - Figure 5: './scripts/garbage_bits/run_gb_eval.sh' 
+  - Figure 6: './scripts/velocity_ins/run_velocity_ins_eval.sh'
+  - Figure 7: './scripts/running_time/run_running_time_eval.pl'
+  - Figure 8 and 9: './scripts/exploration/run_exploration_eval.sh'
+  - Figure 11: './scripts/case_study/run_case_study_eval.sh'
+  - Table 3: './scripts/table_size/run_table_size_eval.pl' (note that there is a typo in the results that will be fixed for the camera-ready version: "#Forward keys" for granularity 0.25 should be 1,062,882 instead of 1,062,982)
+
+The resulting plots can be found as .eps files in the root of the source folder.
